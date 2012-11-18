@@ -1,0 +1,9 @@
+{
+   "shell-version": ["3.6"], 
+   "version": "3.6",
+   "uuid": "lookingglassbutton@fpmurphy.com", 
+   "name": "Looking Glass Button", 
+   "description": "Add Looking Glass button to status area of top panel", 
+   "url": "http://fpmurphy.com/gnome-shell-extensions",
+   "original-authors": "Finnbarr P. Murphy"
+}
