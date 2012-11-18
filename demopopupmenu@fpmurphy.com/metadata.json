@@ -1,0 +1,8 @@
+{
+   "shell-version": ["3.6"], 
+   "uuid": "demopopupmenu@fpmurphy.com", 
+   "name": "Demo Popup Menu", 
+   "description": "Add demo popup menu to center of top panel", 
+   "url": "http://fpmurphy.com/gnome-shell-extensions",
+   "original-authors": "Finnbarr P. Murphy"
+}
