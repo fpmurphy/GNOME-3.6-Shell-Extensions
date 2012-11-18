@@ -1,0 +1,143 @@
+                           README
+                         ==========  
+
+License
+-------
+
+Copyright (c) 2011, 2012  Finnbarr P. Murphy.  All rights reserved. 
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of version 2 of the GNU General Public
+License as published by the Free Software Foundation
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License at
+
+       http://www.gnu.org/licenses/gpl-2.0.html
+
+for more details and to get a copy of the full license.
+
+Note this extension includes some source code from the original 
+Cinnamon distribution.  Copyright of that source code belongs to the 
+respective authors and their license applies.
+
+
+Notice To Packagers
+-------------------
+
+If you repackage this extension, you must retain my copyright
+notice. You are also responsible for maintaining the package 
+- not me.
+
+
+Purpose
+-------
+
+Display current weather conditions and five day forecast.
+
+
+Installation
+------------
+
+Copy the tarball to $HOME/.local/share/gnome-shell/extensions
+and unpack it.  A directory called weather@fpmurphy.com
+should be created. For global use, install the tarball in
+/usr/share/gnome-shell/extensions and unpack.
+
+Restart your GNOME shell (Alt-F2 r is one way) and enable the
+extension using my gnome-extension-tool:
+
+    gnome-extension-tool -e weather@fpmurphy.com
+
+To disable the extension:
+
+    gnome-extension-tool -d weather@fpmurphy.com
+
+See 
+
+    gnome-extension-tool --help
+
+for more information.
+
+Other tools such as gnome-tweak-tool can also be used to
+enable or disable the extension.
+
+If the extension does not install, check the version number in
+metadata.json.  You may have to change it to work with your
+particular version of the GNOME Shell. If this does not fix 
+the problem, use Looking Glass (Alt-F2 lg) to see what the
+error message is.
+
+This extension accesses weather data from World Weather Online
+
+     http://www.worldweatheronline.com/
+
+To use this extension, you must sign up and get a free API key
+from World Weather Online.  Sign up is simple and painless.
+
+Once you have an API key, you can configure the extension by right
+clicking on the weather icon and entering the API key and location.
+Location can either be a string such as TOKYO, DUBLIN, IRELAND, or a 
+zipcode such as 01960.
+
+Alternatively you can use the command line weather-tool (which 
+comes with the extension) to customize the extension via DBus. 
+See
+
+    weather-tool --help
+
+for more information.
+
+
+Version
+-------
+
+V3.6.0  11/19/2012    Ported to GNOME Shell 3.6
+                      Version numbers now match GNOME version.
+V2.5    10/28/2012    Polished UI. 
+V2.2    05/17/2012    Ported to GNOME Shell 3.4
+                      Tooltips removed as no longer supported
+                      by GNOME Shell.
+V2.0    12/28/2011    Ported to GNOME Shell 3.2
+V2.2    03/09/2012    Added modal dialog for customization 
+                      Added D-Bus support and weather-tool
+V2.3    03/16/2012    Polished UI 
+V2.4    03/24/2012    Fixed problem with displaying certain locations
+                      Added observation date/time
+
+
+Notes
+-----
+
+This version of the extension does NOT work on versions of
+the GNOME Shell < 3.6.
+
+This version supports localized message strings. However
+message catalogues are not supplied.
+
+This version has only been tested on Fedora 18 Beta and GNOME 
+Shell 3.6.
+
+As of the date of the latest version of this extension, there are
+no officially published APIs for the GNOME Shell. This extension
+relies on an internal structures which may or may not be present
+in future versions of the GNOME Shell.
+
+
+Misc
+----
+
+Latest version of my GNOME extensions can always be found at:
+
+     http://fpmurphy.com/gnome-shell-extensions
+
+or at:
+
+     http://github.com/fpmurphy
+
+I sometimes discuss the GNOME Shell and extensions on my blog
+at:
+
+     http://blog.fpmurphy.com

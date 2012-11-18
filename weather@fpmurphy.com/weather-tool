@@ -1,0 +1,186 @@
+#!/usr/bin/python
+#
+#   Copyright (c) Finnbarr P. Murphy 2012.  All rights reserved.
+#
+#      Name: weather-tool
+#
+#   Version: 1.0 (03/9/2012)
+#
+#   License: Attribution Assurance License (see www.opensource.org/licenses)
+#
+
+
+try:
+    import os
+    import sys
+    import argparse
+except ImportError, detail:
+    print detail 
+    sys.exit(1)
+
+from gi.repository import Gio, GLib
+
+EXTENSION_IFACE = 'org.gnome.shell.extensions.weather'
+EXTENSION_PATH  = '/org/gnome/shell/extensions/weather'
+
+class ExtensionTool:
+    def __init__(self):
+        try:
+            self.bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+            self.proxy = Gio.DBusProxy.new_sync( self.bus, Gio.DBusProxyFlags.NONE, None, 
+                 EXTENSION_IFACE, EXTENSION_PATH, 'org.freedesktop.DBus.Properties', None)
+        except:
+            print "Exception: %s" % sys.exec_info()[1]
+
+    def get_extension_version(self):
+        output = self.proxy.Get('(ss)', EXTENSION_IFACE, 'ExtensionVersion')
+        return output
+
+    def get_api_key(self):
+        output = self.proxy.Get('(ss)', EXTENSION_IFACE, 'WeatherApiKey')
+        return output
+
+    def get_location(self):
+        output = self.proxy.Get('(ss)', EXTENSION_IFACE, 'WeatherLocation')
+        return output
+
+    def get_interval(self):
+        output = self.proxy.Get('(ss)', EXTENSION_IFACE, 'WeatherInterval')
+        return output
+
+    def get_units(self):
+        output = self.proxy.Get('(ss)', EXTENSION_IFACE, 'WeatherUnits')
+        return output
+
+    def set_apikey(self, apikey):
+        args = GLib.Variant('s', apikey)
+        self.proxy.Set('(ssv)', EXTENSION_IFACE, 'WeatherApiKey', args)
+
+    def set_location(self, location):
+        args = GLib.Variant('s', location)
+        self.proxy.Set('(ssv)', EXTENSION_IFACE, 'WeatherLocation', args)
+
+    def set_interval(self, interval):
+        args = GLib.Variant('s', interval)
+        self.proxy.Set('(ssv)', EXTENSION_IFACE, 'WeatherInterval', args)
+
+    def set_units(self, units):
+        args = GLib.Variant('s', units)
+        self.proxy.Set('(ssv)', EXTENSION_IFACE, 'WeatherUnits', args)
+
+
+def get_units():
+    try:
+        s
+    except NameError: 
+        s = ExtensionTool()
+    units = s.get_units()
+    if units == "0":
+        print 'Measurement units: Imperial'
+    else:
+        print 'Measurement units: Metric'
+
+def set_units(units):
+    if units == "0":
+        print 'New measurement units: Imperial'
+    else:
+        print 'New measurement units: Metric'
+    s = ExtensionTool()
+    s.set_units(units)
+
+def get_interval():
+    try:
+        s
+    except NameError: 
+        s = ExtensionTool()
+    interval = s.get_interval()
+    print 'Update interval (Secs): %s' % (interval)
+
+def set_interval(interval):
+    print 'New update interval (Secs): %s' % (interval)
+    s = ExtensionTool()
+    s.set_interval(interval)
+
+def get_location():
+    try:
+        s
+    except NameError: 
+        s = ExtensionTool()
+    location = s.get_location()
+    print 'Location: %s' % (location)
+
+def set_location(location):
+    print 'New location: %s' % (location)
+    s = ExtensionTool()
+    s.set_location(location)
+
+def get_apikey():
+    try:
+        s
+    except NameError: 
+        s = ExtensionTool()
+    apikey = s.get_api_key()
+    print 'World Weather Online API key: %s' % (apikey)
+
+def set_apikey(apikey):
+    print 'New World Weather Online API Key: %s' % (apikey)
+    s = ExtensionTool()
+    s.set_apikey(apikey)
+
+def list_properties():
+    s = ExtensionTool()
+    version = s.get_extension_version()
+    print 'Extension version: %s' % (version)
+    get_apikey()
+    get_location()
+    get_interval()
+    get_units()
+
+def main():
+    parser = argparse.ArgumentParser(description="Weather extension tool (GNOME Shell)")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-a", "--getapikey", dest="getapikey",
+                       action="store_true", help="get World Weather Online API key")
+    group.add_argument("-A", "--setapikey", dest="setapikey",
+                       action="store", help="set World Weather Online API key")
+    group.add_argument("-i", "--getinterval", dest="getinterval",
+                       action="store_true", help="get weather update interval")
+    group.add_argument("-I", "--setinterval", dest="setinterval",
+                       action="store", help="set weather update interval")
+    group.add_argument("-l", "--getlocation", dest="getlocation",
+                       action="store_true", help="get weather location")
+    group.add_argument("-L", "--setlocation", dest="setlocation",
+                       action="store", help="set weather location")
+    group.add_argument("-u", "--getunits", dest="getunits",
+                       action="store_true", help="get measurement units")
+    group.add_argument("-U", "--setunits", dest="setunits",
+                       action="store", help="set measurement units (0: Imperial, 1: Metric)")
+    group.add_argument("-p", "--properties", dest="listprop",
+                       action="store_true", help="list extension properties")
+
+    args = parser.parse_args()
+
+    if args.getapikey:
+        get_apikey() 
+    elif args.setapikey:
+        set_apikey(args.setapikey) 
+    elif args.getlocation:
+        get_location()
+    elif args.setlocation:
+        set_location(args.setlocation)
+    elif args.getinterval:
+        get_interval()
+    elif args.setinterval:
+        set_interval(args.setinterval)
+    elif args.getunits:
+        get_units()
+    elif args.setunits:
+        set_units(args.setunits)
+    elif args.listprop:
+        list_properties()
+    else:
+        parser.print_usage()
+        sys.exit(0)
+
+if __name__ == "__main__":
+    main()

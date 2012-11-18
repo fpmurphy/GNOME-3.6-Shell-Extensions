@@ -1,0 +1,228 @@
+.weather-box {
+    margin: 0px;
+}
+
+.weather-icon {
+    padding-right: 5px;
+}
+
+.weather-status-icon {
+    height: 16px;
+    width: 16px;
+    padding: 0px;
+}
+
+.weather-status-text {
+    padding: 1px 0 0 5px;
+}
+
+.weather-horizontal-separator {
+    height: 10px; 
+    -separator-width: 1px;
+    -separator-color: #505050;
+}
+
+.weather-location-box {
+    padding: 0 0 0 10px;
+}
+
+.weather-location-innerbox {
+    padding: 0 0 0 10px;
+}
+
+.weather-location-caption-box {}
+.weather-location-caption {
+    font-size: 1em;
+    font-weight: bold;
+    color: rgba(153, 153, 153, 1.0);
+    padding-top: 4px;
+}
+
+.weather-location-value-box {}
+.weather-location-value {
+    font-family: sans-serif;
+    font-size: 2.25em;     
+    color: rgba(153, 153, 153, 1.0);
+    font-weight: bold;
+    padding-left: 10px; 
+}
+
+.weather-temperature-innerbox {
+    text-align: right;
+    padding: 0 0 0 10px;
+}
+
+.weather-temperature-caption-box {}
+.weather-temperature-caption {
+    font-size: 1em;
+    font-weight: bold;
+    color: rgba(153, 153, 153, 1.0);
+    padding-top: 4px;
+}
+
+.weather-temperature-value-box {}
+.weather-temperature-value {
+    font-family: sans-serif;
+    color: rgba(153, 153, 153, 1.0);
+    font-size: 2.25em;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.weather-current-box {
+    padding: 0 0 0px 10px;
+}
+
+.weather-current-databox-left {
+    padding: 0px 5px 0px 10px;
+}
+
+.weather-current-databox-middle {
+    padding: 0px 5px 0px 20px;
+}
+
+.weather-current-databox-right {
+    padding: 0px 0px 0px 20px;
+}
+
+.weather-current-databox-captions {
+    text-align: right;
+    padding-right: 5px;
+    font-size: 0.85em;
+    font-weight: bold;
+    color: rgba(153, 153, 153, 1.0);
+}
+
+.weather-captions-top {
+    margin-top: 0px;
+    padding-top: 4px;
+}
+
+.weather-captions-bottom {
+    margin-top: 0px;
+    padding-top: 9px;
+}
+
+.weather-current-databox-values {
+    color: #cccccc;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+.weather-forecast-box {
+    padding: 10px 5px 0 15px;
+}
+
+.weather-forecast-icon {
+    padding: 0px;
+    width: 30px;
+    height: 30px;
+    border-radius: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.weather-forecast-databox {
+    padding: 0 10px 0 5px;
+}
+
+.weather-forecast-day {
+    font-size: 0.85em;
+    font-weight: bold;
+    color: rgba(153, 153, 153, 1.0);
+}
+
+.weather-forecast-temperature {
+    color: #cccccc;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.weather-dialog-content-box {
+    padding: 6px;
+    spacing: 20px;
+}
+
+.weather-dialog-content-box-left {
+    padding: 0px;
+    spacing: 20px;
+}
+
+.weather-dialog-content-box-right {
+    padding: 0px;
+    spacing: 10px;
+}    
+
+.weather-dialog-label {
+    padding: 0px;
+}
+
+.weather-dialog-entry {
+    padding: 2px;
+    border-radius: 4px;
+    color: rgb(128, 128, 128);
+    border: 2px solid rgba(245,245,245,0.2);
+    background-gradient-start: rgba(5,5,6,0.1);
+    background-gradient-end: rgba(254,254,254,0.1);
+    background-gradient-direction: vertical;
+    selected-color: black;
+    caret-color: rgb(128, 128, 128);
+    caret-size: 1px;
+    width: 240px;
+    transition-duration: 300;
+    box-shadow: inset 0px 2px 4px rgba(0,0,0,0.6);
+}
+
+.weather-dialog-entry:focus,
+.weather-dialog-entry:hover {
+    font-color: black;
+    font-weight: bold;
+    border: 2px solid rgb(136,138,133);
+    background-gradient-start: rgb(200,200,200);
+    background-gradient-end: white;
+    background-gradient-direction: vertical;
+    transition-duration: 300;
+}
+
+.weather-toggle-switch-box {
+    width: 223px;  
+    height: 30px;  
+}
+
+.weather-toggle-switch {
+    background-image: url("weather-toggle-off.svg");
+    background-size: contain;
+}
+
+.weather-toggle-switch:checked {
+    background-image: url("weather-toggle-on.svg");
+    background-size: contain;
+}
+
+.weather-tooltips { 
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 8px;
+    background-color: rgba(0,0,0,0.8); 
+    color: rgba(153, 153, 153, 1.0);
+    font-family: sans-serif;
+    font-size: 2em;
+    text-align: center;
+}
+
+.weather-dialog-error-label {
+    font-size: 15px;
+    color: white;
+}
+
+.weather-dialog-error-box {
+    padding-bottom: 15px;
+    spacing: 5px;
+}
+
+.weather-dialog-error-icon {}
+
+.weather-observation {
+    font-size: 0.7em;
+    padding-left: 10px;
+    color: rgba(153, 153, 153, 1.0);
+}
+
