@@ -1,0 +1,188 @@
+#!/usr/bin/python
+#
+#   Copyright (c) Finnbarr P. Murphy 2012.  All rights reserved.
+#
+#      Name: gnome-extension-tool (G-E-T)
+#
+#   Version: 3.6 (11/18/2012) For GNOME 3.6
+#
+#   License: GNU Public License Version 2 
+#
+
+import os
+import sys
+import argparse
+
+from gi.repository import GLib, Gio
+
+extstate = { 1:"enabled",
+             2:"disabled",
+             3:"error",
+             4:"out of date",
+             5:"downloading",
+             6:"initialized",
+            99:"uninstalled"}
+
+exttype  = { 1:"system",
+             2:"per user"}
+
+GNOME_SHELL_IFACE = 'org.gnome.Shell'
+GNOME_SHELL_PATH  = '/org/gnome/Shell'
+ENABLED_EXTENSIONS_KEY = 'enabled-extensions'
+GNOME_EXTENSION_TOOL_VERSION = '3.6'
+
+
+class GnomeShell:
+    def __init__(self):
+        try:
+            self.bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
+            self.proxy1 = Gio.DBusProxy.new_sync( self.bus, Gio.DBusProxyFlags.NONE, None,
+                 GNOME_SHELL_IFACE, GNOME_SHELL_PATH, 'org.gnome.shell', None)
+            self.proxy2 = Gio.DBusProxy.new_sync( self.bus, Gio.DBusProxyFlags.NONE, None,
+                 GNOME_SHELL_IFACE, GNOME_SHELL_PATH, 'org.freedesktop.DBus.Properties', None)
+            self.proxy3 = Gio.DBusProxy.new_sync( self.bus, Gio.DBusProxyFlags.NONE, None,
+                 GNOME_SHELL_IFACE, GNOME_SHELL_PATH, 'org.gnome.Shell.Extensions', None)
+        except:
+            print "Exception: %s" % sys.exec_info()[1]
+            sys.exit(1)
+
+    def info_extension(self, uuid):
+        return self.proxy3.GetExtensionInfo('(s)', uuid)
+
+    def list_extensions(self):
+        return self.proxy3.ListExtensions()
+
+    def enable_extension(self, uuid):
+        return self.proxy3.EnableExtension('(s)', uuid)
+
+    def disable_extension(self, uuid):
+        return self.proxy3.DisableExtension('(s)', uuid)
+
+    def reload_extension(self, uuid):
+        return self.proxy3.ReloadExtension('(s)', uuid)
+
+    def get_shell_version(self):
+        return self.proxy2.Get('(ss)', GNOME_SHELL_IFACE, 'ShellVersion')
+ 
+def enable_extension(uuid):
+    settings = Gio.Settings(schema='org.gnome.shell')
+    extensions = settings.get_strv(ENABLED_EXTENSIONS_KEY)
+
+    if uuid in extensions:
+        print >> sys.stderr, "%r is already enabled." % (uuid)
+        sys.exit(1)
+
+    extensions.append(uuid);
+    settings.set_strv(ENABLED_EXTENSIONS_KEY, extensions);
+    print "%r is now enabled." % (uuid)
+
+def disable_extension(uuid):
+    settings = Gio.Settings(schema='org.gnome.shell')
+    extensions = settings.get_strv(ENABLED_EXTENSIONS_KEY)
+
+    if uuid not in extensions:
+        print >> sys.stderr, "%r is not enabled or installed." % (uuid,)
+        sys.exit(1)
+
+    extensions.remove(uuid);
+    settings.set_strv(ENABLED_EXTENSIONS_KEY, extensions);
+    print "%r is now disabled." % (uuid,)
+
+def disable_all_extensions():
+    settings = Gio.Settings(schema='org.gnome.shell')
+    extensions = settings.get_strv(ENABLED_EXTENSIONS_KEY)
+
+    s = GnomeShell()
+    for uuid in extensions:
+        print "disabling %s" % (uuid)
+        s.disable_extension(uuid);
+
+    print "All extensions are now disabled."
+
+def info_extension(uuid):
+    s = GnomeShell()
+
+    a = s.info_extension(uuid)
+    if a:
+        print "State: %s" % extstate[a['state']]
+        print "Type: %s" %  exttype[a['type']]
+        print "Path: %s" % a['path']
+        if a['error']:
+            print "Errors: %s" % a['error']
+        else:
+            print "Errors: none"
+        if a['hasPrefs']:
+            print "Has Preferences: yes"
+        else:
+            print "Has Preferences: no"
+    else:
+         print "ERROR: Failed to retrieve data"
+
+    print
+
+def list_extensions():
+    s = GnomeShell()
+
+    l = s.list_extensions()
+    for k, v in l.iteritems():
+        print '%s: %s, %s' % (v["uuid"], extstate[v["state"]], exttype[v["type"]])
+    print
+
+def list_versions():
+    s = GnomeShell()
+    print "Extension Tool Version: %s" % GNOME_EXTENSION_TOOL_VERSION 
+    print "GNOME Shell Version: %s" % s.get_shell_version()
+
+def reload_extension(uuid):
+    settings = Gio.Settings(schema='org.gnome.shell')
+    extensions = settings.get_strv(ENABLED_EXTENSIONS_KEY)
+
+    if uuid not in extensions:
+        print >> sys.stderr, "%r is not enabled or installed." % (uuid,)
+        sys.exit(1)
+
+    s = GnomeShell()
+    s.reload_extension(uuid);
+    print "%r is now reloaded." % (uuid,)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="GNOME Shell extension tool")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("-d", "--disable", nargs=1, action="store", dest="disable",
+                       metavar="uuid", help="disable extension")
+    group.add_argument("-D", "--disable-all", dest="disableall", 
+                       action="store_true", help="disable all extensions")
+    group.add_argument("-e", "--enable", nargs=1, action="store", dest="enable",
+                       metavar="uuid", help="enable extension")
+    group.add_argument("-i", "--info", nargs=1, action="store", dest="info",
+                       metavar="uuid", help="get extension information")
+    group.add_argument("-l", "--list-extensions", dest="listext", 
+                       action="store_true", help="list extensions")
+    group.add_argument("-r", "--reload-extension", dest="reloadext", 
+                       action="store_true", help="reload extension")
+    group.add_argument('-v', '--version', dest="listver",
+                       action="store_true", help="list version numbers")
+
+    args = parser.parse_args()
+
+    if args.disable:
+        disable_extension("".join(args.disable))
+    elif args.disableall:
+        disable_all_extensions()
+    elif args.enable:
+        enable_extension("".join(args.enable))
+    elif args.info:
+        info_extension("".join(args.info))
+    elif args.listext:
+        list_extensions()
+    elif args.listver:
+        list_versions()
+    elif args.reloadext:
+        reload_extension("".join(args.info))
+    else:
+        parser.print_usage()
+        sys.exit(0)
+
+if __name__ == "__main__":
+    main()
