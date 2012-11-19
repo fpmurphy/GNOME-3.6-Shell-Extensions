@@ -1,0 +1,10 @@
+{ 
+   "shell-version": ["3.6"], 
+   "version": "3.6.0",
+   "uuid": "noa11y@fpmurphy.com",
+   "name": "No A11y",
+   "description": "Remove accessibility (a11y) status button from top panel.",
+   "url": "http://fpmurphy.com/gnome-shell-extensions",
+   "original-authors": "Finnbarr P. Murphy",
+   "localedir": "locale"
+}
