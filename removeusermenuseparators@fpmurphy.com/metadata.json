@@ -1,0 +1,10 @@
+{
+   "shell-version": ["3.6"], 
+   "version": "3.6.0",
+   "uuid": "removeusermenuseparators@fpmurphy.com", 
+   "name": "Remove User Menu Separators", 
+   "description": "Remove all menu separators from the user menu.",
+   "url": "http://fpmurphy.com/gnome-shell-extensions",
+   "original-authors": "Finnbarr P. Murphy",
+   "localdir": "locale"
+}

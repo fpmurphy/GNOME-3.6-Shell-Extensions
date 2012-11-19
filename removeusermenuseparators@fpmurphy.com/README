@@ -1,0 +1,101 @@
+                           README
+                         ==========  
+
+License:
+--------
+
+Copyright (c) 2012 Finnbarr P. Murphy.  All rights reserved.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of VERSION 2 of the GNU General Public 
+License as published by the Free Software Foundation provided
+that the above copyright notice is included.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+
+Go to http://www.gnu.org/licenses/gpl-2.0.html to get a copy
+of the license.
+
+
+Notice to Packagers
+-------------------
+
+If you repackage this extension, you must retain my copyright
+notice. You are also responsible for maintaining the package -
+not me.
+
+
+Purpose
+-------
+
+Remove all menu separators from the user menu.
+
+
+Installation
+------------
+
+Copy the tarball to $HOME/.local/share/gnome-shell/extensions
+and unpack it.  A directory called removeusermenuseparators@fpmurphy.com
+should be created. For global use, install the tarball in
+/usr/share/gnome-shell/extensions and unpack.
+
+Restart your GNOME shell (Alt-F2 r is one way) and enable the 
+extension using: 
+
+     gnome-extension-tool -e removeusermenuseparators@fpmurphy.com
+
+To disable the extension:
+
+     gnome-extension-tool -d removeusermenuseparators@fpmurphy.com
+
+Other tools such as gnome-tweak-tool can also be used to
+enable or disable the extension. 
+
+If the extension does not install, check the version number in
+metadate.json.  You may have to change it to work with your
+particular version of the GNOME Shell. If this does not fix 
+the problem, use Looking Glass (Alt-F2 lg) to see what the
+error message is.
+
+
+Version
+-------
+
+V3.6.0 11/19/2012  Port to GNOME Shell 3.6
+V2.1     3/4/2011  Port to GNOME Shell 3.4 
+V2.0    12/2/2011  For GNOME Shell 3.2 
+
+
+Notes
+-----
+
+This version of the extension does NOT work on versions of 
+the GNOME Shell < 3.6.
+
+This has only been tested on Fedora 18 Beta and GNOME Shell 3.6.1
+
+As of the date of the latest version of this extension, there are 
+no officially published APIs for the GNOME Shell. This extension 
+relies on an internal structures which may or may not be present 
+in future versions of the GNOME Shell.
+
+
+Misc
+----
+
+The latest versions of my GNOME Shell extensions can always be
+found at:
+
+     http://fpmurphy.com/gnome-shell-extensions
+
+or at:
+
+     http://github.com/fpmurphy
+
+I sometimes discuss the GNOME Shell and extensions on my blog
+at:
+
+     http://blog.fpmurphy.com
+
