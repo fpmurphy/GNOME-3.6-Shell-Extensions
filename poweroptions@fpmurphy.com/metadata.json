@@ -1,0 +1,10 @@
+{
+   "shell-version": ["3.6"], 
+   "version": "3.6.0",
+   "uuid": "poweroptions@fpmurphy.com", 
+   "name": "Power Options", 
+   "description": "Show Suspend, Hibernate (if available) and Power Off options in user menu.",
+   "url": "http://fpmurphy.com/gnome-shell-extensions",
+   "original-authors": "Finnbarr P. Murphy",
+   "localdir": "locale"
+}
