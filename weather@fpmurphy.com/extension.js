@@ -214,6 +214,8 @@ const PrefsDialog = new Lang.Class ({
         this._prefs.interval = this._intervalEntry.clutter_text.get_text();
         this._prefs.units = this._unitsEntry;
         this.write_prefs(this._path);
+
+        return true;
     },
 
     open: function(timestamp) {
@@ -405,7 +407,7 @@ const WeatherButton = new Lang.Class({
         let here = this;
         let message = Soup.Message.new('GET', url);
         _httpSession.queue_message(message, function(session, message) {
-            jObj = JSON.parse(message.response_body.data);
+            let jObj = JSON.parse(message.response_body.data);
             callback.call(here, jObj['data']);
         });
     },
