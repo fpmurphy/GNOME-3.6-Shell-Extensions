@@ -160,7 +160,7 @@ def main():
     group.add_argument("-l", "--list-extensions", dest="listext", 
                        action="store_true", help="list extensions")
     group.add_argument("-r", "--reload-extension", dest="reloadext", 
-                       action="store_true", help="reload extension")
+                       action="store", help="reload extension")
     group.add_argument('-v', '--version', dest="listver",
                        action="store_true", help="list version numbers")
 
@@ -179,7 +179,7 @@ def main():
     elif args.listver:
         list_versions()
     elif args.reloadext:
-        reload_extension("".join(args.info))
+        reload_extension("".join(args.reloadext))
     else:
         parser.print_usage()
         sys.exit(0)
